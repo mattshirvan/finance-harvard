@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+{% block main %}
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary border text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+    <section class="container p-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    {% if session['cash'] > "10000" %}
+                        <td colspan="4">{{session['cash']}}</td>
+                    {% else %}
+                        <td colspan="12"><strong>$10,000.00</strong></td>
+                    {% endif %}
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for stock in stocks %}
+                    <tr>
+                        <td>{{ stock['symbol'] }}</td>
+                        <td>{{ stock['name'] }}</td>
+                        <td>{{ stock['shares'] }}</td>
+                        <td>{{ stock['price'] }}</td>
+                        <td>{{ stock['total'] }}</td>
+                    </tr>
+                {% endfor %}
+
+                <tr>
+                    <td>CASH</td>
+                    <td colspan="12">{{session['cash']}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
